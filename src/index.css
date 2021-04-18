@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.p-lr-1 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.p-l-1 {
+  padding-left: 1rem;
+}
+
+.m-t-2 {
+  margin-top: 2rem;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.todo label {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}

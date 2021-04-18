@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Navbar } from './Components/Navbar/Navbar';
+import { Form } from './Components/Form/Form';
+import ItemList from './Components/ItemList';
+import { ITodo } from './Components/Interfaces';
 
-function App() {
+const App: React.FC = () => {
+  const [todos, setTodos] = useState<Array<ITodo>>([{ value: 'Task 1', id: 12, isCompleted: false }]);
+
+  const onAddTodos = (value: string) => {
+    const newTodo: ITodo = {
+      value,
+      id: Date.now(),
+      isCompleted: false
+    }
+
+    setTodos(prev => [newTodo, ...prev])
+    console.log(todos);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <div className="container">
+        <Form onAddTodos={onAddTodos} />
+        <ItemList todos={todos} />
+      </div>
+    </>
   );
 }
 
