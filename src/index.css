@@ -31,6 +31,23 @@ code {
 
 .todo label {
   margin-top: 1rem;
+  width: 100%;
+  height: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  background-color: #f3f3f3;
+}
+
+.fz-1-2 {
+  font-size: 1.2rem !important;
+}
+
+.todo-value {
+  color: black;
+}
+
+.todo-value.completed {
+  text-decoration: line-through;
+
 }

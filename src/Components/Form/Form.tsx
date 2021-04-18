@@ -4,7 +4,7 @@ interface FormProps {
     onAddTodos(newTodo: string): void;
 }
 
-export const Form: React.FC<FormProps> = (props) => {
+export const Form: React.FC<FormProps> = ({ onAddTodos }) => {
     const [value, setValue] = useState<string>('')
 
     const onValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +13,7 @@ export const Form: React.FC<FormProps> = (props) => {
 
     const submitInputValue = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            props.onAddTodos(value);
+            onAddTodos(value);
             setValue('');
         }
 

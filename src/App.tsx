@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Navbar } from './Components/Navbar/Navbar';
 import { Form } from './Components/Form/Form';
@@ -6,7 +6,24 @@ import ItemList from './Components/ItemList';
 import { ITodo } from './Components/Interfaces';
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<Array<ITodo>>([{ value: 'Task 1', id: 12, isCompleted: false }]);
+  const [todos, setTodos] = useState<Array<ITodo>>(
+    [
+      {
+        value: 'Task 1',
+        id: 12,
+        isCompleted: true
+      }
+    ]
+  );
+
+  useEffect(() => {
+    const localTodos: Array<ITodo> = JSON.parse(localStorage.getItem('todos') || '[]')
+    setTodos(localTodos);
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   const onAddTodos = (value: string) => {
     const newTodo: ITodo = {
@@ -14,9 +31,18 @@ const App: React.FC = () => {
       id: Date.now(),
       isCompleted: false
     }
-
     setTodos(prev => [newTodo, ...prev])
-    console.log(todos);
+  }
+
+  const onCheckTodos = (id: number) => {
+    setTodos(prev => prev.map(todo =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+    )
+    );
+  }
+
+  const onDeleteTodos = (id: number) => {
+    setTodos(prev => prev.filter(todo => todo.id !== id));
   }
 
   return (
@@ -24,7 +50,11 @@ const App: React.FC = () => {
       <Navbar />
       <div className="container">
         <Form onAddTodos={onAddTodos} />
-        <ItemList todos={todos} />
+        <ItemList
+          todos={todos}
+          onCheckTodos={onCheckTodos}
+          onDeleteTodos={onDeleteTodos}
+        />
       </div>
     </>
   );
